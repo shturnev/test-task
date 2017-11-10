@@ -124,18 +124,13 @@
             listN     = $(".people-list"),
             photoUrl  = info.photos['images-folder'];
 
-        console.log(info);
-
         _.sampleSize(workArr, 3).forEach(function (item, key) {
-            console.log(item, key);
 
             var li = $(listN).children("li:eq("+key+")"), id = --item.id;
             $(li).find('.name').text(item.last_name + ' ' +item.first_name);
             $(li).find('.prof').text(info.descr.employees[id].title);
             $(li).find('a').css({'background-image': 'url('+photoUrl+info.photos.employees[id].full+')' });
         });
-
-
     }
 
     //init
