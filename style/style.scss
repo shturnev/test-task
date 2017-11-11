@@ -38,15 +38,17 @@ html,body{
   font-size: 14px;
 }
 
-main{
+.main{
   max-width: 960px;
   margin: 0 auto;
 
   header{
     display: flex;
+    position: relative;
     justify-content: space-between;
     padding: 16px 16px 13px;
     background: white;
+
 
     @include media(){
       flex-direction: column;
@@ -66,13 +68,14 @@ main{
       align-self: flex-end;
 
       @include media(){
+        position: absolute;
+        z-index: 10; top: 100%; left: 0;
         display: none;
         align-self: auto;
         flex-direction: column;
         width: 100%;
+        background: white;
       }
-
-
       a{
         display: block;
         color: $green;
@@ -117,11 +120,21 @@ main{
       @include media(){
         display:block;
         position: absolute;
-        color: $green;
+        color: $gray;
         font-size: 30px;
         font-weight: 400;
         top: 27px;
         right: 16px;
+
+        &~nav{
+          display: none;
+        }
+        &.active{
+          color: $green;
+          &~nav{
+            display: flex;
+          }
+        }
       }
     }
 
@@ -129,13 +142,13 @@ main{
   .head-image{
     display:flex;
     height: 165px;
-    background: no-repeat center / cover;
+    background: url('../img/Coffee-Drinkers.jpg') no-repeat center / cover;
     text-decoration: none;
     padding: 0 12px;
     box-sizing: border-box;
 
     @include media(){
-      display: none;
+      height: 106px;
     }
     span{
       align-self: flex-end;
@@ -144,16 +157,16 @@ main{
       color: #fafafa;
       font-size: 48px;
       font-weight: 400;
+
+      @include media(){
+        font-size: 30px;
+        margin-bottom: 15px;
+      }
     }
   }
-  &>.content{
+  &>.wr-cont{
     background: white;
     padding: 16px 16px 30px;
-
-    @include media(){
-      padding-top: 0;
-    }
-
 
     &>.people-list{
       list-style: none;
@@ -209,8 +222,10 @@ main{
               font-size: 11.5px;
               padding:0 16px ;
               opacity: 0;
-              overflow: hidden;
               transition: all 0.3s ease;
+
+              //ie костыль
+              width: calc(100% - 32px);
 
             }
           }
@@ -263,21 +278,26 @@ main{
       padding: 16px;
     }
 
-
     &>*{
-      flex: 1;
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: auto;
     }
     &:before{
       content: '';
       display:block;
-      flex: 1;
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: auto;
     }
     .copy{
       color: #eceff1;
       font-size: 14px;
       font-weight: 400;
       text-align: center;
-      flex: 2;
+      flex-grow: 2;
+      flex-shrink: 0;
+      flex-basis: auto;
     }
     .social{
       display: flex;
