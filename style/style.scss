@@ -5,7 +5,7 @@
 $green:#009688;
 $gray: #282727;
 
-@mixin grid-col($num, $margin: 0)
+@mixin grid-col($num, $margin: false)
 {
   $p: percentage(1 / $num);
   width: if($margin, calc(#{$p} - #{$margin} + (#{$margin} / #{$num})), $p);
@@ -269,7 +269,7 @@ html,body{
   footer{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 10px 16px 16px;
 
     @include media(){
@@ -280,29 +280,37 @@ html,body{
     }
 
     &>*{
-      flex-grow: 1;
-      flex-shrink: 0;
-      flex-basis: auto;
+      @include grid-col(3);
+      @include media(){
+        width: 100%;
+      }
+
+
     }
-    &:before{
+    /*&:before{
       content: '';
       display:block;
-      flex-grow: 1;
+      !*flex-grow: 1;
       flex-shrink: 0;
-      flex-basis: auto;
-    }
+      flex-basis: auto;*!
+    }*/
     .copy{
       color: #eceff1;
       font-size: 14px;
       font-weight: 400;
       text-align: center;
-      flex-grow: 2;
+      /*flex-grow: 2;
       flex-shrink: 0;
-      flex-basis: auto;
+      flex-basis: auto;*/
     }
     .social{
       display: flex;
       justify-content: flex-end;
+
+      @include media(){
+        justify-content: center;
+      }
+
 
       a{
         text-decoration: none;
