@@ -7,7 +7,6 @@
   <link rel="stylesheet" type="text/css" href="style/style.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-
 <body>
 
 <div class="main-cont">
@@ -68,10 +67,12 @@
   </footer>
 </div>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
-<script>
+<script type="text/babel">  
+  
+
     $(".toggler").on("click", function () {
         var act = $(this).hasClass('active'),
             i   = $(this).children();
@@ -109,18 +110,24 @@
     }
 
     function setInfo(info){
-        var workArr   = info.names.employees.slice(),
+        if(info.names.length < 1 || info.photos.length < 1 || info.descr.length < 1) {alert('Error: no data'); return false;}
+        
+        const names     = _.sampleSize(info.names.employees, 3).slice(),
             listN     = $(".people-list"),
             photoUrl  = info.photos['images-folder'];
 
-        _.sampleSize(workArr, 3).forEach(function (item, key) {
+        names.forEach((item, key) => {
+            let descr = info.descr.employees.filter((i) => i.id === item.id)[0];
+            let photo = info.photos.employees.filter((i) => i.id === item.id)[0];
 
-            var li = $(listN).children("li:eq("+key+")"), id = --item.id;
+            let li = $(listN).children("li:eq("+key+")");
+
             $(li).find('.name').text(item.last_name + ' ' +item.first_name);
-            $(li).find('.prof').text(info.descr.employees[id].title);
-            $(li).find('.descr').text(info.descr.employees[id].description);
-            $(li).find('a').css({'background-image': 'url('+photoUrl+info.photos.employees[id].full+')' });
+            $(li).find('.prof').text(descr.title);
+            $(li).find('.descr').text(descr.description);
+            $(li).find('a').css({'background-image': 'url('+photoUrl+photo.full+')' });
         });
+
     }
 
     //init
